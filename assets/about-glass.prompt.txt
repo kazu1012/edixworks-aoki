@@ -1,0 +1,6 @@
+Asset: about-glass.jpg
+Generated with: built-in imagegen tool
+Delivery: JPEG, 1254 x 1254; original generated PNG preserved outside the project.
+
+Final prompt:
+Use case: stylized-concept. Asset type: editorial artwork for the About section of a Japanese graphic and web designer portfolio named Edix Works. Create a premium abstract 3D studio still life: one sculptural continuous loop of translucent cobalt blue and icy blue glass, like a folded ribbon with a beautifully resolved sculptural twist. On a cool very pale gray-blue architectural pedestal with a subtle softly lit background. Calm, precise, visually striking, restrained Swiss graphic design sensibility, realistic refractive glass caustics and soft daylight shadows, sophisticated material depth. Palette strictly deep navy, electric cobalt blue, pale icy cyan and cool off-white, echoing an abstract blue wave website header. Square composition, sculpture in the center with generous negative space and comfortable clearance around all edges so it can crop horizontally. The artwork is a single image only, no website mockup, no UI, no text, no letters, no watermark, no people, no cartoon. Suitable as a finished high-quality commercial design portfolio visual.
