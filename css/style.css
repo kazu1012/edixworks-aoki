@@ -74,14 +74,16 @@ section { padding: 116px 0; }
 .section-number { margin-right: 22px; color: var(--blue); font-size: 12px; font-weight: 600; letter-spacing: .04em; }
 .heading-dot { color: var(--blue); }
 .section-heading > p { margin: 0; color: var(--muted); font-size: 12px; letter-spacing: .15em; }
-.service-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; counter-reset: service; }
-.service-card { position: relative; min-width: 0; padding: 32px 0 0; border-top: 1px solid var(--line); counter-increment: service; }
-.service-icon { position: relative; display: flex; width: 72px; height: 72px; align-items: center; justify-content: center; border: 1px solid #d7e1fa; border-radius: 16px; background: #eaf0fe; transition: background .3s ease, border-color .3s ease; }
-.service-icon::after { content: counter(service, decimal-leading-zero); position: absolute; top: 7px; right: 9px; color: var(--blue); font-size: 9px; font-weight: 700; letter-spacing: .06em; line-height: 1; transition: color .3s ease; }
-.service-icon img { width: 36px; height: auto; filter: brightness(0) saturate(100%) invert(29%) sepia(95%) saturate(2967%) hue-rotate(220deg) brightness(93%) contrast(94%); transition: filter .3s ease; }
-.service-card:hover .service-icon { border-color: var(--blue); background: var(--blue); }
-.service-card:hover .service-icon::after { color: #ffffffb3; }
-.service-card:hover .service-icon img { filter: brightness(0) invert(1); }
+.service-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; }
+.service-card { position: relative; min-width: 0; padding: 32px 0 0; border-top: 1px solid var(--line); }
+.service-icon { position: relative; display: flex; width: 104px; height: 104px; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #82bbae66; border-radius: 22px; background: #0b2a43; box-shadow: 0 8px 20px #123c501a; transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.service-icon::before { content: ""; position: absolute; inset: 0; background: linear-gradient(145deg, #071c32b8, #0c304963), url("../assets/hero-aoki.png") 78% center / auto 100%; opacity: .8; transition: transform .6s ease; }
+.service-icon--direction::before { background-position: center, 60% center; }
+.service-icon--graphic::before { background-position: center, 80% center; }
+.service-icon--web::before { background-position: center, right center; }
+.service-icon img { position: relative; width: 64px; height: 64px; }
+.service-card:hover .service-icon { transform: translateY(-3px); border-color: #98d5c2; box-shadow: 0 12px 24px #123c5026; }
+.service-card:hover .service-icon::before { transform: scale(1.08); }
 .service-card h3 { margin: 27px 0 16px; font-size: 26px; font-weight: 600; letter-spacing: -.045em; }
 .service-card > p { margin: 0; max-width: 330px; color: var(--muted); font-size: 15px; line-height: 2.15; }
 .works-section { background: #edf1f6; border-block: 1px solid #e4eaf2; }
@@ -95,7 +97,8 @@ section { padding: 116px 0; }
 .work-title h3 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -.04em; }
 .work-title h3 { min-width: 0; overflow-wrap: anywhere; }
 .work-number { flex-shrink: 0; color: var(--muted); font-size: 15px; }
-.works-pagination { display: none; }
+/* PCではWorksのドット・再生ボタンを表示しない */
+.works-controls { display: none; }
 .work-category { display: inline-block; margin-top: 11px; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
 .work-description { margin: 12px 0 0; max-width: 480px; color: var(--muted); font-size: 14px; line-height: 1.9; }
 .works-note { display: flex; justify-content: space-between; width: min(var(--content), calc(100% - 96px)); margin: 60px auto 0; border-top: 1px solid #cdd4df; padding-top: 22px; color: var(--muted); font-size: 16px; }
@@ -168,10 +171,9 @@ section { padding: 116px 0; }
   .section-number { font-size: 10px; margin-right: 14px; }
   .section-heading > p { font-size: 11px; }
   .service-list { grid-template-columns: 1fr; gap: 30px; }
-  .service-card { padding: 24px 0 0 74px; min-height: 120px; }
-  .service-icon { position: absolute; left: 0; top: 28px; width: 56px; height: 56px; border-radius: 13px; }
-  .service-icon::after { top: 5px; right: 6px; font-size: 8px; }
-  .service-icon img { width: 30px; }
+  .service-card { padding: 24px 0 0 86px; min-height: 120px; }
+  .service-icon { position: absolute; left: 0; top: 28px; width: 68px; height: 68px; border-radius: 16px; }
+  .service-icon img { width: 46px; height: 46px; }
   .service-card h3 { margin: 0 0 12px; font-size: clamp(20px, 5.5vw, 23px); overflow-wrap: anywhere; }
   .service-card > p { max-width: none; font-size: 15px; line-height: 2; }
   .works-grid { display: flex; align-items: flex-start; gap: 16px; width: 100%; padding: 6px 20px 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 20px; scrollbar-width: none; }
@@ -179,10 +181,45 @@ section { padding: 116px 0; }
   .works-grid > .work-card { flex: 0 0 calc(100% - 24px); scroll-snap-align: start; }
   .works-grid > .work-card.reveal { opacity: 1; transform: none; transition: none; }
   .work-card:hover > img { transform: none; box-shadow: none; }
-  .works-pagination { display: flex; justify-content: center; flex-wrap: wrap; gap: 0; margin: 12px 20px 0; }
-  .works-dot { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; }
-  .works-dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #a7b4c6; transition: background .2s ease, transform .2s ease; }
-  .works-dot[aria-current="true"]::before { background: var(--blue); transform: scale(1.35); }
+  /* スマホだけ：カード下に6つのドットを表示 */
+  .works-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 20px 0;
+  }
+  .works-pagination {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .works-dot {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+  }
+  .works-dot-indicator {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #8999ad;
+    transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  /* 今表示しているカードのドットを濃い青で強調 */
+  .works-dot[aria-current="true"] .works-dot-indicator {
+    background: #2458e6;
+    transform: scale(1.3);
+    box-shadow: 0 0 0 4px #2458e61a;
+  }
+  .works-autoplay { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid #c5d0df; border-radius: 50%; background: transparent; color: var(--text); cursor: pointer; }
   .work-title { margin-top: 16px; }
   .work-title h3 { font-size: clamp(19px, 5vw, 23px); }
   .work-number, .work-category { font-size: 12px; }

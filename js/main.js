@@ -24,22 +24,78 @@ if ('IntersectionObserver' in window && !reduceMotion) {
 const worksTrack = document.querySelector('#works-track');
 const worksPagination = document.querySelector('.works-pagination');
 const worksStatus = document.querySelector('.works-status');
+let worksControls = document.querySelector('.works-controls');
+let worksAutoplay = document.querySelector('.works-autoplay');
 
 if (worksTrack && worksPagination && worksStatus) {
+  // Live Previewに古いHTMLが残っていても、操作部分を補って初期化する。
+  if (!worksControls) {
+    worksControls = document.createElement('div');
+    worksControls.className = 'works-controls';
+    worksPagination.before(worksControls);
+    worksControls.append(worksPagination);
+  }
+  if (!worksAutoplay) {
+    worksAutoplay = document.createElement('button');
+    worksAutoplay.type = 'button';
+    worksAutoplay.className = 'works-autoplay';
+    worksAutoplay.hidden = true;
+    worksAutoplay.setAttribute('aria-controls', 'works-track');
+    const symbol = document.createElement('span');
+    symbol.setAttribute('aria-hidden', 'true');
+    worksAutoplay.append(symbol);
+    worksControls.append(worksAutoplay);
+  }
+  // 表示・非表示はCSSの画面幅条件で決める。hidden属性を残さない。
+  worksControls.removeAttribute('hidden');
+  worksPagination.removeAttribute('hidden');
   const cards = Array.from(worksTrack.querySelectorAll('.work-card'));
   const mobile = window.matchMedia('(max-width: 767px)');
   let currentIndex = 0;
   let scrollFrame = 0;
+  let autoplayTimer = 0;
+  let autoplayEnabled = !reduceMotion;
+  let pointerDown = false;
+  let hovered = false;
+  let focusPaused = false;
+  let inView = !('IntersectionObserver' in window);
 
+  function restartAutoplay() {
+    window.clearTimeout(autoplayTimer);
+    if (!mobile.matches || !autoplayEnabled || document.hidden || !inView
+      || pointerDown || hovered || focusPaused || cards.length < 2) return;
+    autoplayTimer = window.setTimeout(() => {
+      const next = (currentIndex + 1) % cards.length;
+      goTo(next, next !== 0);
+      restartAutoplay();
+    }, 2000);
+  }
+
+  function syncAutoplayButton() {
+    const label = autoplayEnabled ? '自動再生を停止' : '自動再生を開始';
+    worksAutoplay.setAttribute('aria-label', label);
+    worksAutoplay.title = label;
+    worksAutoplay.querySelector('span').textContent = autoplayEnabled ? 'Ⅱ' : '▶';
+    // 自動切り替え中はスクリーンリーダーの読み上げを繰り返さない。
+    worksStatus.setAttribute('aria-live', autoplayEnabled ? 'off' : 'polite');
+  }
+
+  const existingDots = Array.from(worksPagination.querySelectorAll('.works-dot'));
   const dots = cards.map((card, index) => {
-    const button = document.createElement('button');
+    const button = existingDots[index] || document.createElement('button');
     button.type = 'button';
     button.className = 'works-dot';
     button.setAttribute('aria-label', `${index + 1}件目：${card.querySelector('h3').textContent}`);
     button.setAttribute('aria-controls', 'works-track');
-    worksPagination.append(button);
+    if (!button.querySelector('.works-dot-indicator')) {
+      const indicator = document.createElement('span');
+      indicator.className = 'works-dot-indicator';
+      indicator.setAttribute('aria-hidden', 'true');
+      button.append(indicator);
+    }
     return button;
   });
+  worksPagination.replaceChildren(...dots);
 
   function updateCurrent(index) {
     currentIndex = index;
@@ -60,7 +116,57 @@ if (worksTrack && worksPagination && worksStatus) {
     worksTrack.scrollTo({ left, behavior: animate && !reduceMotion ? 'smooth' : 'auto' });
   }
 
-  dots.forEach((dot, index) => dot.addEventListener('click', () => goTo(index)));
+  dots.forEach((dot, index) => dot.addEventListener('click', () => {
+    goTo(index);
+    restartAutoplay();
+  }));
+
+  worksAutoplay.addEventListener('click', () => {
+    autoplayEnabled = !autoplayEnabled;
+    focusPaused = false;
+    syncAutoplayButton();
+    restartAutoplay();
+  });
+
+  [worksTrack, worksPagination].forEach(element => element.addEventListener('pointerdown', () => {
+    pointerDown = true;
+    focusPaused = false;
+    restartAutoplay();
+  }, { passive: true }));
+  ['pointerup', 'pointercancel'].forEach(type => window.addEventListener(type, () => {
+    if (!pointerDown) return;
+    pointerDown = false;
+    restartAutoplay();
+  }, { passive: true }));
+  worksTrack.addEventListener('wheel', restartAutoplay, { passive: true });
+  worksTrack.addEventListener('pointerenter', (event) => {
+    if (event.pointerType !== 'mouse') return;
+    hovered = true;
+    restartAutoplay();
+  });
+  worksTrack.addEventListener('pointerleave', () => {
+    hovered = false;
+    restartAutoplay();
+  });
+  [worksTrack, worksPagination].forEach(element => {
+    element.addEventListener('focusin', () => {
+      if (pointerDown) return;
+      focusPaused = true;
+      restartAutoplay();
+    });
+    element.addEventListener('focusout', (event) => {
+      focusPaused = worksTrack.contains(event.relatedTarget) || worksPagination.contains(event.relatedTarget);
+      restartAutoplay();
+    });
+  });
+  document.addEventListener('visibilitychange', restartAutoplay);
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      restartAutoplay();
+    }, { threshold: 0.1 }).observe(worksTrack);
+  }
 
   worksTrack.addEventListener('scroll', () => {
     if (!mobile.matches || scrollFrame) return;
@@ -84,10 +190,11 @@ if (worksTrack && worksPagination && worksStatus) {
     else return;
     event.preventDefault();
     goTo(target);
+    restartAutoplay();
   });
 
   function syncLayout() {
-    worksPagination.hidden = !mobile.matches;
+    worksAutoplay.hidden = !mobile.matches;
     worksStatus.hidden = !mobile.matches;
     if (mobile.matches) {
       worksTrack.setAttribute('tabindex', '0');
@@ -106,14 +213,22 @@ if (worksTrack && worksPagination && worksStatus) {
       cards.forEach(card => {
         ['role', 'aria-roledescription', 'aria-label'].forEach(name => card.removeAttribute(name));
       });
+      pointerDown = false;
+      hovered = false;
+      focusPaused = false;
     }
+    restartAutoplay();
   }
 
   mobile.addEventListener('change', syncLayout);
-  if ('ResizeObserver' in window) {
-    new ResizeObserver(() => goTo(currentIndex, false)).observe(worksTrack);
-  } else {
-    window.addEventListener('resize', () => goTo(currentIndex, false));
+  function syncPosition() {
+    if (mobile.matches) goTo(currentIndex, false);
   }
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(syncPosition).observe(worksTrack);
+  } else {
+    window.addEventListener('resize', syncPosition);
+  }
+  syncAutoplayButton();
   syncLayout();
 }

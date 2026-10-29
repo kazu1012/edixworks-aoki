@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="leaf" x1="33" y1="43" x2="64" y2="14" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#79BFC3" stop-opacity=".25"/>
+      <stop offset="1" stop-color="#D2F2DD" stop-opacity=".85"/>
+    </linearGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" stroke="#B6DFD1" stroke-opacity=".25" stroke-dasharray="2 6"/>
+  <path d="M21 62C29 54 33 48 38 40C34 26 45 18 63 16C60 35 52 46 38 40" fill="url(#leaf)"/>
+  <path d="M21 62C29 54 39 39 58 21M36 44C27 44 22 39 19 31M31 51C40 54 50 56 61 50" stroke="#D5EEE4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M38 40C34 26 45 18 63 16C60 35 52 46 38 40Z" stroke="#B6DFD1" stroke-width="1.4"/>
+  <path d="M48 21L46 32L57 30" stroke="#B6DFD1" stroke-opacity=".6" stroke-width="1.1" stroke-linecap="round"/>
+  <circle cx="19" cy="29" r="3.5" fill="#123C50" stroke="#B6DFD1" stroke-width="1.5"/>
+  <circle cx="63" cy="49" r="3.5" fill="#123C50" stroke="#B6DFD1" stroke-width="1.5"/>
+  <circle cx="21" cy="62" r="3" fill="#D5EEE4"/>
+</svg>
