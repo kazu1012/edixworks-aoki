@@ -16,7 +16,7 @@
     <div class="site-header">
       <a class="site-logo" href="#top" aria-label="Edix Works トップへ">edix works<span class="logo-dot">.</span></a>
       <nav class="main-nav" aria-label="メインナビゲーション">
-        <a href="#service">Service</a>
+        <a href="#service">What I Can Do</a>
         <a href="#works">Works</a>
         <a href="#about">About</a>
         <a class="contact-link" href="#contact">Contact <span aria-hidden="true">↗</span></a>
@@ -41,10 +41,15 @@
   <main id="main">
     <section class="service-section" id="service" aria-labelledby="service-heading">
       <div class="section-heading">
-        <h2 id="service-heading"><span class="section-number">01 /</span>Service<span class="heading-dot">.</span></h2>
+        <h2 id="service-heading"><span class="section-number">01 /</span>What I Can Do<span class="heading-dot">.</span></h2>
         <p>サービス</p>
       </div>
       <div class="service-list content-width">
+        <article class="service-card">
+          <div class="service-icon"><img src="./assets/icon3.png" width="134" height="114" alt="" aria-hidden="true"></div>
+          <h3>Direction</h3>
+          <p>課題の整理から、アイデアをかたちにするまで。目的を共有し、デザインとコミュニケーションでプロジェクトを導きます。</p>
+        </article>
         <article class="service-card">
           <div class="service-icon"><img src="./assets/icon2.png" width="179" height="141" alt="" aria-hidden="true"></div>
           <h3>Graphic Design</h3>
@@ -55,11 +60,6 @@
           <h3>Web Design</h3>
           <p>使いやすさと、そのブランドらしさを大切に。情報設計からUIまで、伝わる・使いたくなるWebサイトをつくります。</p>
         </article>
-        <article class="service-card">
-          <div class="service-icon"><img src="./assets/icon3.png" width="134" height="114" alt="" aria-hidden="true"></div>
-          <h3>Direction</h3>
-          <p>課題の整理から、アイデアをかたちにするまで。目的を共有し、デザインとコミュニケーションでプロジェクトを導きます。</p>
-        </article>
       </div>
     </section>
 
@@ -68,7 +68,7 @@
         <h2 id="works-heading"><span class="section-number">02 /</span>Works<span class="heading-dot">.</span></h2>
         <p>制作実績</p>
       </div>
-      <div class="works-grid content-width">
+      <div class="works-grid content-width" id="works-track">
         <article class="work-card">
           <img src="./assets/work6.jpg" width="330" height="300" alt="水色のスマートフォンのUIデザイン" loading="lazy">
           <div class="work-title"><h3>Portfolio Website</h3><span class="work-number">01</span></div>
@@ -101,6 +101,8 @@
           <span class="work-category">ウェブデザイン</span>
         </article>
       </div>
+      <div class="works-pagination" role="group" aria-label="制作実績の表示切り替え" hidden></div>
+      <p class="visually-hidden works-status" role="status" hidden></p>
       <p class="works-note">A selection of design explorations <span aria-hidden="true">↗</span></p>
     </section>
 
@@ -111,13 +113,12 @@
       </div>
       <div class="about-content">
         <figure class="about-image">
-          <img src="./assets/about-glass.jpg" width="1254" height="1254" alt="透明なブルーのガラスがなめらかにつながる、リボンのような抽象的な造形" loading="lazy">
-          <figcaption><span>FORM / PERSPECTIVE</span><span aria-hidden="true">↗</span></figcaption>
+          <img src="./assets/about-aoki.png" width="1254" height="1254" alt="街路樹と柵を背景に座る、ジャケット姿の青木一秀" loading="lazy">
         </figure>
         <div class="about-description">
           <p class="about-role"><span>DESIGN &amp; TECH TRAINEE /</span> <span>CHIBA, JAPAN</span></p>
           <h3>Kazuhide Aoki<span class="heading-dot">.</span></h3>
-          <p>現在、WebデザインやHTMLなどを学んでいる職業訓練生です。企業やサービスの課題をデザインの力で解決し、企業のため、またその向こう側にいるお客様のために技術を身につけています。</p>
+          <p>現在、WebデザインやHTMLなどを学んでいる職業訓練生です。企業やサービスの課題をデザインの力で解決し、企業のため、またその向こう側にいるお客様のために活動できる技術を身につけたいと思って活動しています。</p>
           <ul class="about-fields" aria-label="取り組んでいる領域"><li>Graphic</li><li>Web</li><li>Direction</li></ul>
         </div>
       </div>
@@ -125,7 +126,7 @@
   </main>
 
   <footer class="site-footer" id="contact">
-    <div class="footer-top"><div><p class="eyebrow">CONTACT</p><h2>Let’s create<span> together.</span></h2><p class="footer-message">想いを、次のかたちへ。</p><div class="footer-contact"><a href="mailto:kazuhide.aoki@gmail.com">kazuhide.aoki@gmail.com <span aria-hidden="true">↗</span></a><a href="tel:000-0000-0000">TEL 000-0000-0000 <span aria-hidden="true">↗</span></a></div></div><a class="back-top" href="#top" aria-label="ページの先頭へ戻る">↑</a></div>
+    <div class="footer-top"><div><p class="eyebrow">CONTACT</p><p class="footer-tagline">Make it clear. Make it matter.</p><h2>Let’s create<span> together.</span></h2><p class="footer-message">想いを、次のかたちへ。</p><div class="footer-contact"><a href="mailto:kazuhide.aoki@gmail.com">kazuhide.aoki@gmail.com <span aria-hidden="true">↗</span></a><a href="tel:000-0000-0000">TEL 000-0000-0000 <span aria-hidden="true">↗</span></a></div></div><a class="back-top" href="#top" aria-label="ページの先頭へ戻る">↑</a></div>
     <div class="footer-bottom"><a class="site-logo" href="#top">edix works<span class="logo-dot">.</span></a><small>© Kazuhide Aoki</small><span>DESIGNED WITH PURPOSE.</span></div>
   </footer>
   <script src="./js/main.js" defer></script>
